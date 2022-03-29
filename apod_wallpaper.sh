@@ -25,7 +25,7 @@ then
     export GIO_EXTRA_MODULES=/usr/lib/x86_64-linux-gnu/gio/modules/
     gsettings get org.gnome.desktop.background picture-uri
     gsettings set org.gnome.desktop.background picture-uri "file:///home/leob/Pictures/Wallpapers/$pic_name"
-    gsettings set org.gnome.desktop.background picture-options 'centered'
+    gsettings set org.gnome.desktop.background picture-options 'scaled'
 fi
 
 rm astropix.html* index.html* 2> /dev/null
