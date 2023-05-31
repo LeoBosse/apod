@@ -10,21 +10,30 @@
 
 cd ~/Pictures/Wallpapers
 
+# Clean folder: remove previous apod html and index pages
 rm astropix.html* index.html* 2> /dev/null
 #touch tmp
 
+# Download the apod page source code in which the name of the image can be found.
 wget http://apod.nasa.gov/apod/astropix.html
+# Test day
+#wget http://apod.nasa.gov/apod/ap230530.html -O astropix.html
 
+# Retrieve the name of the image inside the source code.
 image=`grep "IMG SRC" astropix.html | cut -d "\"" -f 2`
 pic_name=`echo $image | cut -d "/" -f 3`
-echo $image $pic_name
-ls $pic_name 2>/dev/null
+
+#echo "DEBUG"
+#echo $image $pic_name
+#ls $pic_name 2>/dev/null
+
+# Check if the image does not exist in the folder already (if ls return is empty). Then downloads the image and sets it as background.
 if [ -z `ls $pic_name 2>/dev/null` ]
 then
     wget "http://apod.nasa.gov/apod/$image"
     export GIO_EXTRA_MODULES=/usr/lib/x86_64-linux-gnu/gio/modules/
-    gsettings get org.gnome.desktop.background picture-uri
-    gsettings set org.gnome.desktop.background picture-uri "file:///home/leob/Pictures/Wallpapers/$pic_name"
+    gsettings get org.gnome.desktop.background picture-uri-dark
+    gsettings set org.gnome.desktop.background picture-uri-dark "file:///home/leob/Pictures/Wallpapers/$pic_name"
     gsettings set org.gnome.desktop.background picture-options 'scaled'
 fi
 
